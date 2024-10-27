@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0 1rem;
+  font-family: 'Lato', sans-serif;
+}
+
+button,
+input[type='submit'],
+input[type='reset'] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+#root {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 550px) {
+  body {
+    padding: 0 1.5rem;
+  }
+}
