@@ -12,6 +12,7 @@ const GridItem = (props: GridItemProps) => {
   const { id, images, onSaveButtonClick, saved } = props;
   const { fixed_width_small } = images;
   const [isSaved, setIsSaved] = useState<boolean>(saved);
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(false);
   const animateRef = useRef<boolean>(false);
 
   const handleClick = () => {
@@ -22,8 +23,13 @@ const GridItem = (props: GridItemProps) => {
   };
 
   return (
-    <div className="grid-item">
-      <img src={fixed_width_small.url} alt="" className="grid-item__image" />
+    <div className={`grid-item ${!isImageLoaded ? 'hidden' : ''}`}>
+      <img
+        src={fixed_width_small.url}
+        alt=""
+        className="grid-item__image"
+        onLoad={() => setIsImageLoaded(true)}
+      />
       <button className="grid-item__button">
         <HeartIcon
           className={`grid-item__icon ${isSaved ? 'filled' : ''} ${

@@ -1,21 +1,17 @@
 import { type GiphyResponse } from '../types/giphy.types';
 
-type RunGiphyQueryArgs = {
-  endpoint: 'trending' | 'search';
-  searchTerm?: string;
+type RunGiphySearchQueryArgs = {
+  searchQuery?: string;
 };
 
-const runGiphyQuery = async ({
-  endpoint,
-  searchTerm,
-}: RunGiphyQueryArgs): Promise<GiphyResponse | null> => {
+export const runGiphySearchQuery = async ({
+  searchQuery,
+}: RunGiphySearchQueryArgs): Promise<GiphyResponse | null> => {
   try {
     const giphyResponse = await fetch(
-      `https://api.giphy.com/v1/gifs/${endpoint}?api_key=${
+      `https://api.giphy.com/v1/gifs/search?api_key=${
         import.meta.env.VITE_GIPHY_API_KEY
-      }&bundle=messaging_non_clips${
-        endpoint === 'search' ? `&q=${searchTerm || ''}` : ''
-      }`
+      }&bundle=messaging_non_clips&q=${searchQuery}`
     );
     return giphyResponse.json();
   } catch (err) {
@@ -24,4 +20,17 @@ const runGiphyQuery = async ({
   }
 };
 
-export default runGiphyQuery;
+export const runGiphyTrendingQuery =
+  async (): Promise<GiphyResponse | null> => {
+    try {
+      const giphyResponse = await fetch(
+        `https://api.giphy.com/v1/gifs/trending?api_key=${
+          import.meta.env.VITE_GIPHY_API_KEY
+        }&bundle=messaging_non_clips`
+      );
+      return giphyResponse.json();
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  };

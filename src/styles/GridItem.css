@@ -16,6 +16,11 @@
 .grid-item {
   display: flex;
   position: relative;
+  transition: opacity ease-in, 0.2s;
+
+  &.hidden {
+    opacity: 0;
+  }
 
   .grid-item__image {
     width: 100%;

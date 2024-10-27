@@ -1,38 +1,36 @@
 import { useState, useEffect, useMemo } from 'react';
 import './App.css';
+import { type GiphyResponse } from './types/giphy.types';
 import {
-  runGiphyQuery,
-  debounce,
+  runGiphySearchQuery,
+  runGiphyTrendingQuery,
   savedGifsFromLocalStorage,
 } from './utilities';
 import { HomeIcon, HeartIcon, SearchForm, Grid } from './components';
 
 function App() {
-  const [results, setResults] = useState<Awaited<
-    ReturnType<typeof runGiphyQuery>
-  > | null>(null);
+  const [results, setResults] = useState<GiphyResponse | null>(null);
   const [showSaved, setShowSaved] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const fetchGiphyData = async (
-    endpoint: 'trending' | 'search',
-    searchTerm?: string
-  ) => {
+  const fetchGiphyTrending = async () => {
     hideSaved();
-    const data = await runGiphyQuery({ endpoint, searchTerm });
+    const data = await runGiphyTrendingQuery();
+    if (data) setResults(data);
+  };
+  const fetchGiphySearch = async () => {
+    hideSaved();
+    const data = await runGiphySearchQuery({ searchQuery });
     if (data) setResults(data);
   };
 
-  const fetchGiphyTrending = () => fetchGiphyData('trending');
-  const fetchGiphySearch = (searchTerm: string) =>
-    fetchGiphyData('search', searchTerm);
-
-  const searchInputHandler = debounce(async (searchTerm?: string) => {
+  const searchInputHandler = async (searchTerm?: string) => {
     if (searchTerm) {
-      await fetchGiphySearch(searchTerm);
+      await fetchGiphySearch();
     } else {
       await fetchGiphyTrending();
     }
-  }, 300);
+  };
 
   const homeIconHandler = () => fetchGiphyTrending();
 
@@ -59,6 +57,8 @@ function App() {
         </button>
         <SearchForm
           searchFunction={searchInputHandler}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
           className="header__form"
         />
         <button className="header__icon" onClick={handleFavouritesClick}>
