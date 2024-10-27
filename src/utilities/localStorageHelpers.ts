@@ -2,7 +2,6 @@ import { type GifObject } from '../types/giphy.types';
 
 export const savedGifsFromLocalStorage = () => {
   const savedGifs = localStorage.getItem('favourites');
-  console.log('saved gifs', savedGifs);
   if (!savedGifs) {
     localStorage.setItem('favourites', JSON.stringify([]));
     return [];
