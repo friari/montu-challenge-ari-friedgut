@@ -27,9 +27,11 @@ function App() {
     fetchGiphyData('search', searchTerm);
 
   const searchInputHandler = debounce(async (searchTerm?: string) => {
-    searchTerm
-      ? await fetchGiphySearch(searchTerm)
-      : await fetchGiphyTrending();
+    if (searchTerm) {
+      await fetchGiphySearch(searchTerm);
+    } else {
+      await fetchGiphyTrending();
+    }
   }, 300);
 
   const homeIconHandler = () => fetchGiphyTrending();

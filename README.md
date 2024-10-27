@@ -6,3 +6,5 @@
 2. add a `.env.local` file in the root directory
 3. copy paste into the .env.local file: `VITE_GIPHY_API_KEY=TNAwWQAk9dgYLsCN6URWoweV8pVQD7Od`
 4. In terminal, run `npm run dev`
+
+### If there are errors in the console, try clearing local storage and refreshing.

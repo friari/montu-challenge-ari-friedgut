@@ -17,7 +17,7 @@ const Grid = ({ data }: GridProps) => {
 
   const handleSaveButtonClick = (currentGif: GifObject) => {
     setSavedGifs((prevSavedGifs: GifObject[]) => {
-      return saveCurrentGif(savedGifs, currentGif);
+      return saveCurrentGif(prevSavedGifs, currentGif);
     });
   };
 
